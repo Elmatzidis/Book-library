@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  font-size: 1.5em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.main-content {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  background-color: #151515;
+}
+
+
+.nav {
+  min-height: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  color: #fff;
+}
+
+.nav > h1 {
+  padding: 10px;
+  font-size: clamp(1em, 6vw, 2em);
+}
+
+.main {
+  width: 100%;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+  border-top: 2px solid rgba(255, 255, 255, 0.5);
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  gap: 30px;
+}
+
+.btn {
+  font-size: clamp(0.8em, 4vw, 1.2em);
+  border-radius: 15px;
+  border: none;
+  padding: 10px;
+  transition: 150ms ease-out;
+  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  margin-top: 80px;
+}
+
+.btn:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn::before {
+  content: "+";
+}
+
+.main > p {
+  max-width: 500px;
+  min-width: 300px;
+  font-size: clamp(0.8em, 2vw, 1em);
+  text-align: center;
+}
+
+.footer {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  color: #fff;
+}
+
+.footer > span {
+  padding: 10px;
+}
+
