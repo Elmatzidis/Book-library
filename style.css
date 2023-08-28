@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora&family=Poppins&family=Quicksand:wght@300&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +9,7 @@
 body {
   height: 100vh;
   font-size: 1.5em;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .main-content {
@@ -17,7 +19,6 @@ body {
   flex: 1 1 auto;
   background-color: #151515;
 }
-
 
 .nav {
   min-height: 15vh;
@@ -83,3 +84,62 @@ body {
   padding: 10px;
 }
 
+.book-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.book-card {
+  border-radius: 15px;
+  box-shadow: 0 0 8px, #000;
+}
+
+#new-book-form {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(240, 238, 241, 1);
+  border-radius: 10px;
+  max-height: 500px;
+  min-height: 250px;
+  color: #000;
+  text-align: center;
+}
+
+.book-form-input {
+  height: 100%;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.book-form-input > span {
+  margin: 5px;
+}
+
+.book-form-input > input {
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  font-size: 0.8em;
+  box-shadow: 0px 3px 30px -12px #000;
+}
+
+.read {
+  font-size: 0.8em;
+}
+
+#submit {
+  margin: 0 auto;
+  font-size: 1em;
+  background-color: #9fff9c;
+  border: none;
+  border-radius: 10px;
+  height: 40px;
+  width: 90%;
+  cursor: pointer;
+}

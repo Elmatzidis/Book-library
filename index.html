@@ -21,6 +21,38 @@
           Click the "Add book" button to add a book, or the "Add demo books"
           button to add four demo books.
         </p>
+        <div class="book-container"></div>
+        <form id="new-book-form">
+          <div class="book-form-input">
+            <span>Add a new book</span>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              required
+              placeholder="Title"
+            /><br />
+            <input
+              type="text"
+              id="author"
+              name="author"
+              required
+              placeholder="Author"
+            /><br />
+            <input
+              type="number"
+              id="pages"
+              name="pages"
+              required
+              placeholder="Pages"
+            /><br />
+            <div class="read">
+              <label for="read">Have you read it?</label>
+              <input type="checkbox" id="read" name="read" /><br />
+            </div>
+            <button id="submit" type="submit">Submit</button>
+          </div>
+        </form>
       </div>
       <div class="footer">
         <span>Mady by elmatzidis</span>
