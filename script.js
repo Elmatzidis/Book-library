@@ -1,3 +1,11 @@
+// Variables
+const bookContainer = document.querySelector(".book-container");
+const bookForm = document.querySelector(".new-book-form");
+const btn = document.querySelector(".btn");
+const submit = document.querySelector("#submit");
+const closeBookContainer = document.querySelector(".close-book-container");
+const overlayShow = document.querySelector(".overlay");
+
 // Array which stores all the books
 const myLibrary = [];
 
@@ -9,8 +17,55 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead;
 }
 
+// Closes the booForm container
+closeBookContainer.addEventListener("click", () => {
+  if ((bookForm.style.display = "none")) {
+    closeBookContainer.style.display = "none";
+    overlayShow.classList.remove("overlay-show");
+  }
+});
+
 // Adds the book to array myLibrary
 function addBookToLibrary(book) {
   myLibrary.push(book);
+}
+
+// Display the book according to the users input
+function displayBooks() {
+  bookContainer.innerHTML = "";
+
+  myLibrary.forEach((book, index) => {
+    const bookCard = document.createElement("div");
+    bookCard.classList.add("book-card");
+
+    // Creation of the bookForm
+    bookCard.innerHTML = `\
+    <div class="book-card-container">
+      <span>${book.title}</span>
+      <span>Author: ${book.author}</span>
+      <span>Pages: ${book.pages}</span>
+      <span class="book-read">${book.isRead ? "Read" : "Not-Read"}</span>
+      <button class="toggle-read" data-index="${index}">Read</button>
+      <button class="remove-book" data-index="${index}">Remove</button>
+    </div>
+    `;
+
+    // Changes read button based on what the textContent is
+    if (book.isRead) {
+      const bookRead = bookCard.querySelector(".book-read");
+      const toggle_Read = bookCard.querySelector(".toggle-read");
+
+      if (bookRead.textContent === "Read") {
+        toggle_Read.textContent = "Not-Read";
+        toggle_Read.style.backgroundColor = "#E68C8C";
+      } else if (bookRead.textContent === "Not-Read") {
+        toggle_Read.textContent = "Read";
+        toggle_Read.style.backgroundColor = "#9fff9c";
+      }
+    }
+
+    //Appends the bookcard to the book Container
+    bookContainer.appendChild(bookCard);
+  });
 }
 
