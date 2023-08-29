@@ -113,3 +113,22 @@ submit.addEventListener("click", (e) => {
   e.preventDefault();
 });
 
+//Changes the read textContent Read or Not-Read
+//Removes 1 bookCard if buttons pressed
+bookContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("toggle-read")) {
+    const index = e.target.getAttribute("data-index");
+    toggleRead(index);
+  }
+
+  if (e.target.classList.contains("remove-book")) {
+    const index = e.target.getAttribute("data-index");
+    removeBook(index);
+  }
+});
+
+//Book simple tests
+addBookToLibrary(new Book("Book 1", "Author 1", 200, true));
+addBookToLibrary(new Book("Book 2", "Author 2", 300, false));
+
+displayBooks();
