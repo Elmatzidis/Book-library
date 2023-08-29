@@ -69,3 +69,47 @@ function displayBooks() {
   });
 }
 
+// If book.isRead is true or false
+function toggleRead(index) {
+  myLibrary[index].isRead = !myLibrary[index].isRead;
+  displayBooks();
+}
+
+// Removes a book Card
+function removeBook(index) {
+  myLibrary.splice(index, 1);
+  displayBooks();
+}
+
+// Displays the book Form input
+btn.addEventListener("click", () => {
+  bookForm.style.display = "block";
+  closeBookContainer.style.display = "block";
+  overlayShow.classList.add("overlay-show");
+});
+
+// Submits the user input from the form
+// Validation if an input is empty
+submit.addEventListener("click", (e) => {
+  const title = document.querySelector("#title").value;
+  const author = document.querySelector("#author").value;
+  const pages = document.querySelector("#pages").value;
+  const isRead = document.querySelector("#read").checked;
+
+  // Validation
+  if (title === "" || author === "" || pages === "") {
+    window("Please fill in the rest of the field");
+  } else if (pages > 5000) {
+    window("Pages cannot exceed 5000");
+  }
+  //Adds every new input from user input
+  const newBook = new Book(title, author, pages, isRead);
+  addBookToLibrary(newBook);
+
+  bookForm.reset(); //Resets the bookForm
+  bookForm.style.display = "none";
+  overlayShow.classList.remove("overlay-show");
+  displayBooks();
+  e.preventDefault();
+});
+
