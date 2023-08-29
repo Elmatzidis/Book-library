@@ -12,6 +12,7 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+/* All of the pages content */
 .main-content {
   min-height: 100%;
   display: flex;
@@ -20,6 +21,18 @@ body {
   background-color: #151515;
 }
 
+.overlay-show{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0,0.5);
+  z-index: 1;
+}
+/* All of the pages content */
+
+/* Navigation */
 .nav {
   min-height: 15vh;
   display: flex;
@@ -32,7 +45,9 @@ body {
   padding: 10px;
   font-size: clamp(1em, 6vw, 2em);
 }
+/* Navigation */
 
+/* Main content */
 .main {
   width: 100%;
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
@@ -58,7 +73,7 @@ body {
 }
 
 .btn:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #adf5ab;
 }
 
 .btn::before {
@@ -72,7 +87,24 @@ body {
   text-align: center;
 }
 
-.footer {
+.book-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  width: 98%;
+  gap: 20px;
+}
+
+.book-card {
+  border-radius: 15px;
+  background-color: #FFFBFB;
+  color: #000;
+  padding: 10px;
+  box-shadow: 0 5px 2px #fff;
+}
+
+/* Main content */
+/* Footer */
+.footer { 
   height: 10vh;
   display: flex;
   justify-content: center;
@@ -83,30 +115,21 @@ body {
 .footer > span {
   padding: 10px;
 }
+/* Footer */
 
-.book-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 20px;
-}
-
-.book-card {
-  border-radius: 15px;
-  box-shadow: 0 0 8px, #000;
-}
-
-#new-book-form {
+/* Book form for user input */
+.new-book-form {
   display: none;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 30%;
+  margin: 0 auto;
   background-color: rgb(240, 238, 241, 1);
   border-radius: 10px;
   max-height: 500px;
   min-height: 250px;
   color: #000;
   text-align: center;
+  z-index: 2;
 }
 
 .book-form-input {
@@ -142,4 +165,60 @@ body {
   height: 40px;
   width: 90%;
   cursor: pointer;
+  transition: 250ms;
 }
+
+#submit:hover {
+  background-color: #70ef6c;
+}
+
+.close-book-container {
+  cursor: pointer;
+  text-align: end;
+  color: #151515;
+  transition: 250ms;
+  animation: scaleDown 250ms ease-in-out;
+}
+
+.close-book-container:hover {
+  color: rgb(247, 73, 73);
+}
+
+/* Book form for user input */
+
+/* Book cards */
+.toggle-read {
+  background-color: #9fff9c;
+  font-size: 1em;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 150ms;
+}
+
+.remove-book {
+  background-color:#c0c0c0;
+  font-size: 1em;
+  padding: 15px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 150ms;
+}
+.book-card-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+}
+
+.toggle-read:hover {
+  background-color: #5bc558;
+}
+
+.remove-book:hover {
+  filter: brightness(90%);
+}
+/* Book card Properties */
+
