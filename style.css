@@ -24,7 +24,7 @@ body {
 .overlay-show{
   height: 100%;
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0,0.5);
@@ -43,7 +43,7 @@ body {
 
 .nav > h1 {
   padding: 10px;
-  font-size: clamp(1em, 6vw, 2em);
+  font-size: clamp(1.5em, 6vw, 2em);
 }
 /* Navigation */
 
@@ -61,7 +61,7 @@ body {
 }
 
 .btn {
-  font-size: clamp(0.8em, 4vw, 1.2em);
+  font-size: clamp(1.1em, 4vw, 1.2em);
   border-radius: 15px;
   border: none;
   padding: 10px;
@@ -92,6 +92,7 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   width: 98%;
   gap: 20px;
+  padding-bottom: 20px;
 }
 
 .book-card {

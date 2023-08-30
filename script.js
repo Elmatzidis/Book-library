@@ -17,14 +17,6 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead;
 }
 
-// Closes the booForm container
-closeBookContainer.addEventListener("click", () => {
-  if ((bookForm.style.display = "none")) {
-    closeBookContainer.style.display = "none";
-    overlayShow.classList.remove("overlay-show");
-  }
-});
-
 // Adds the book to array myLibrary
 function addBookToLibrary(book) {
   myLibrary.push(book);
@@ -81,6 +73,15 @@ function removeBook(index) {
   displayBooks();
 }
 
+// Removes invalid keys
+function preventInvalidKeys(e) {
+  const invalidKeys = [69, 187, 189, 109, 107, 110];
+
+  if (invalidKeys.includes(e.keyCode)) {
+    e.preventDefault();
+  }
+}
+
 // Displays the book Form input
 btn.addEventListener("click", () => {
   bookForm.style.display = "block";
@@ -102,11 +103,13 @@ submit.addEventListener("click", (e) => {
   } else if (pages > 5000) {
     window("Pages cannot exceed 5000");
   }
-  //Adds every new input from user input
+
+  //Adds every new input from user input to a new book
   const newBook = new Book(title, author, pages, isRead);
   addBookToLibrary(newBook);
 
-  bookForm.reset(); //Resets the bookForm
+  //Resets the bookForm
+  bookForm.reset();
   bookForm.style.display = "none";
   overlayShow.classList.remove("overlay-show");
   displayBooks();
@@ -126,6 +129,29 @@ bookContainer.addEventListener("click", (e) => {
     removeBook(index);
   }
 });
+
+// Closes the booForm container
+closeBookContainer.addEventListener("click", () => {
+  const title = document.querySelector("#title");
+  const author = document.querySelector("#author");
+  const pages = document.querySelector("#pages");
+  const isRead = document.querySelector("#read");
+
+  // Clears the value after book form is closed
+  title.value = "";
+  author.value = "";
+  pages.value = "";
+  isRead.checked = false;
+
+  bookForm.style.display = "none";
+  closeBookContainer.style.display = "none";
+  overlayShow.classList.remove("overlay-show");
+});
+
+// AddEventListeners for invalid keys
+title.addEventListener("keydown", preventInvalidKeys);
+author.addEventListener("keydown", preventInvalidKeys);
+pages.addEventListener("keydown", preventInvalidKeys);
 
 //Book simple tests
 addBookToLibrary(new Book("Book 1", "Author 1", 200, true));
