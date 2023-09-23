@@ -5,6 +5,8 @@ const btn = document.querySelector(".btn");
 const submit = document.querySelector("#submit");
 const closeBookContainer = document.querySelector(".close-book-container");
 const overlayShow = document.querySelector(".overlay");
+const edit = document.querySelector(".edit-btn");
+let indexOfBookToEdit = null;
 
 // Array which stores all the books
 const myLibrary = [];
@@ -31,8 +33,9 @@ function displayBooks() {
     bookCard.classList.add("book-card");
 
     // Creation of the bookForm
-    bookCard.innerHTML = `\
+    bookCard.innerHTML = `
     <div class="book-card-container">
+    <button class="edit-btn" data-index="${index}"><img src="images/edit.svg" class="edit-btn" data-index="${index}"></button>
       <span>${book.title}</span>
       <span>Author: ${book.author}</span>
       <span>Pages: ${book.pages}</span>
@@ -82,6 +85,58 @@ function preventInvalidKeys(e) {
   }
 }
 
+function editBook(index) {
+  const book = myLibrary[index];
+
+  const title = document.querySelector("#title");
+  const author = document.querySelector("#author");
+  const pages = document.querySelector("#pages");
+  const isRead = document.querySelector("#read");
+
+  bookForm.reset();
+
+  // Populate the form with book details
+  title.value = book.title;
+  author.value = book.author;
+  pages.value = book.pages;
+  isRead.checked = book.isRead;
+
+  indexOfBookToEdit = index; // Set the index of the book being edited
+
+  // Display the book form
+  bookForm.style.display = "block";
+  closeBookContainer.style.display = "block";
+  overlayShow.classList.add("overlay-show");
+}
+
+function saveEditBook(index) {
+  const book = myLibrary[index];
+
+  const newTitle = document.querySelector("#title").value;
+  const newAuthor = document.querySelector("#author").value;
+  const newPages = document.querySelector("#pages").value;
+  const newIsRead = document.querySelector("#read").checked;
+
+  book.title = newTitle;
+  book.author = newAuthor;
+  book.pages = newPages;
+  book.isRead = newIsRead;
+
+  bookForm.style.display = "none";
+  overlayShow.classList.remove("overlay-show");
+  displayBooks();
+}
+
+
+
+// Clicking anywhere outside of bookForm closes the bookForm
+window.addEventListener("click", (e) => {
+  if (e.target == overlayShow) {
+    bookForm.style.display = "none";
+    overlayShow.classList.remove("overlay-show");
+  }
+});
+
 // Displays the book Form input
 btn.addEventListener("click", () => {
   bookForm.style.display = "block";
@@ -90,30 +145,36 @@ btn.addEventListener("click", () => {
 });
 
 // Submits the user input from the form
+// Check if user wants to edit book
 // Validation if an input is empty
 submit.addEventListener("click", (e) => {
-  const title = document.querySelector("#title").value;
-  const author = document.querySelector("#author").value;
-  const pages = document.querySelector("#pages").value;
-  const isRead = document.querySelector("#read").checked;
+  e.preventDefault();
+  if (indexOfBookToEdit !== null) {
+    saveEditBook(indexOfBookToEdit);
+    indexOfBookToEdit = null;
+  } else {
+    const title = document.querySelector("#title").value;
+    const author = document.querySelector("#author").value;
+    const pages = document.querySelector("#pages").value;
+    const isRead = document.querySelector("#read").checked;
 
-  // Validation
-  if (title === "" || author === "" || pages === "") {
-    window("Please fill in the rest of the field");
-  } else if (pages > 5000) {
-    window("Pages cannot exceed 5000");
+    // Validation
+    if (title === "" || author === "" || pages === "") {
+      window("Please fill in the rest of the field");
+    } else if (pages > 5000) {
+      window("Pages cannot exceed 5000");
+    }
+
+    //Adds every new input from user input to a new book
+    const newBook = new Book(title, author, pages, isRead);
+    addBookToLibrary(newBook);
   }
-
-  //Adds every new input from user input to a new book
-  const newBook = new Book(title, author, pages, isRead);
-  addBookToLibrary(newBook);
 
   //Resets the bookForm
   bookForm.reset();
   bookForm.style.display = "none";
   overlayShow.classList.remove("overlay-show");
   displayBooks();
-  e.preventDefault();
 });
 
 //Changes the read textContent Read or Not-Read
@@ -124,6 +185,11 @@ bookContainer.addEventListener("click", (e) => {
     toggleRead(index);
   }
 
+  if (e.target.classList.contains("edit-btn")) {
+    const index = e.target.getAttribute("data-index");
+    editBook(index);
+  }
+
   if (e.target.classList.contains("remove-book")) {
     const index = e.target.getAttribute("data-index");
     removeBook(index);
@@ -132,16 +198,8 @@ bookContainer.addEventListener("click", (e) => {
 
 // Closes the booForm container
 closeBookContainer.addEventListener("click", () => {
-  const title = document.querySelector("#title");
-  const author = document.querySelector("#author");
-  const pages = document.querySelector("#pages");
-  const isRead = document.querySelector("#read");
-
-  // Clears the value after book form is closed
-  title.value = "";
-  author.value = "";
-  pages.value = "";
-  isRead.checked = false;
+  // Resets the bookForm
+  bookForm.reset();
 
   bookForm.style.display = "none";
   closeBookContainer.style.display = "none";

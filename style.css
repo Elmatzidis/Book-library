@@ -21,13 +21,13 @@ body {
   background-color: #151515;
 }
 
-.overlay-show{
+.overlay-show {
   height: 100%;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 /* All of the pages content */
@@ -97,15 +97,35 @@ body {
 
 .book-card {
   border-radius: 15px;
-  background-color: #FFFBFB;
+  background-color: #fffbfb;
   color: #000;
   padding: 10px;
   box-shadow: 0 5px 2px #fff;
 }
 
+.edit-btn img {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.edit-btn {
+  width: 40px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  transition: 150ms;
+}
+
+.change {
+  background-color: #5bc558;
+}
+.edit-btn:hover {
+  transform: translateY(-5px);
+}
 /* Main content */
 /* Footer */
-.footer { 
+.footer {
   height: 10vh;
   display: flex;
   justify-content: center;
@@ -131,6 +151,7 @@ body {
   color: #000;
   text-align: center;
   z-index: 2;
+  animation: scaleUp 200ms ease-in;
 }
 
 .book-form-input {
@@ -178,7 +199,7 @@ body {
   text-align: end;
   color: #151515;
   transition: 250ms;
-  animation: scaleDown 250ms ease-in-out;
+  
 }
 
 .close-book-container:hover {
@@ -199,7 +220,7 @@ body {
 }
 
 .remove-book {
-  background-color:#c0c0c0;
+  background-color: #c0c0c0;
   font-size: 1em;
   padding: 15px;
   border: none;
@@ -223,3 +244,20 @@ body {
 }
 /* Book card Properties */
 
+@keyframes scaleUp{
+  from{
+    transform: scale(0);
+  }
+  to{
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleDown{
+  from{
+    transform: scale(1);
+  }
+  to{
+    transform: scale(0);
+  }
+}
