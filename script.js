@@ -93,8 +93,6 @@ function editBook(index) {
   const pages = document.querySelector("#pages");
   const isRead = document.querySelector("#read");
 
-  bookForm.reset();
-
   // Populate the form with book details
   title.value = book.title;
   author.value = book.author;
@@ -117,6 +115,14 @@ function saveEditBook(index) {
   const newPages = document.querySelector("#pages").value;
   const newIsRead = document.querySelector("#read").checked;
 
+  if (newTitle === "" || newAuthor === "" || newPages === "") {
+    window.alert("Please fill in the rest of the field");
+    return;
+  } else if (newPages > 5000) {
+    window.alert("Pages can not exceed 5000");
+    return;
+  }
+
   book.title = newTitle;
   book.author = newAuthor;
   book.pages = newPages;
@@ -127,13 +133,12 @@ function saveEditBook(index) {
   displayBooks();
 }
 
-
-
 // Clicking anywhere outside of bookForm closes the bookForm
 window.addEventListener("click", (e) => {
   if (e.target == overlayShow) {
     bookForm.style.display = "none";
     overlayShow.classList.remove("overlay-show");
+    bookForm.reset();
   }
 });
 
@@ -160,17 +165,19 @@ submit.addEventListener("click", (e) => {
 
     // Validation
     if (title === "" || author === "" || pages === "") {
-      window("Please fill in the rest of the field");
+      window.alert("Please fill in the rest of the field");
+      return; // Exit the function if validation fails
     } else if (pages > 5000) {
-      window("Pages cannot exceed 5000");
+      window.alert("Pages cannot exceed 5000");
+      return; // Exit the function if validation fails
     }
 
-    //Adds every new input from user input to a new book
+    // Adds every new input from user input to a new book
     const newBook = new Book(title, author, pages, isRead);
     addBookToLibrary(newBook);
   }
 
-  //Resets the bookForm
+  // Resets the bookForm
   bookForm.reset();
   bookForm.style.display = "none";
   overlayShow.classList.remove("overlay-show");
@@ -207,8 +214,6 @@ closeBookContainer.addEventListener("click", () => {
 });
 
 // AddEventListeners for invalid keys
-title.addEventListener("keydown", preventInvalidKeys);
-author.addEventListener("keydown", preventInvalidKeys);
 pages.addEventListener("keydown", preventInvalidKeys);
 
 //Book simple tests
