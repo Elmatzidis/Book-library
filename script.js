@@ -9,8 +9,19 @@ const edit = document.querySelector(".edit-btn");
 let indexOfBookToEdit = null;
 
 // Array which stores all the books
-const myLibrary = [];
+let myLibrary = [];
 
+getStorage();
+
+// Sets the local storage
+function setLocalStorage() {
+  localStorage.setItem(`myLibrary`, JSON.stringify(myLibrary));
+}
+
+//Retrieves data from local storage
+function getStorage() {
+  myLibrary = JSON.parse(localStorage.getItem("myLibrary")) || [];
+}
 // Creation of a book
 function Book(title, author, pages, isRead) {
   this.title = title;
@@ -22,6 +33,7 @@ function Book(title, author, pages, isRead) {
 // Adds the book to array myLibrary
 function addBookToLibrary(book) {
   myLibrary.push(book);
+  setLocalStorage();
 }
 
 // Display the book according to the users input
@@ -62,18 +74,21 @@ function displayBooks() {
     //Appends the bookcard to the book Container
     bookContainer.appendChild(bookCard);
   });
+  setLocalStorage();
 }
 
 // If book.isRead is true or false
 function toggleRead(index) {
   myLibrary[index].isRead = !myLibrary[index].isRead;
   displayBooks();
+  setLocalStorage();
 }
 
 // Removes a book Card
 function removeBook(index) {
   myLibrary.splice(index, 1);
   displayBooks();
+  setLocalStorage();
 }
 
 // Removes invalid keys
@@ -217,7 +232,10 @@ closeBookContainer.addEventListener("click", () => {
 pages.addEventListener("keydown", preventInvalidKeys);
 
 //Book simple tests
-addBookToLibrary(new Book("Book 1", "Author 1", 200, true));
-addBookToLibrary(new Book("Book 2", "Author 2", 300, false));
+// Checks if there are no books
+if (myLibrary.length === 0) {
+  addBookToLibrary(new Book("Book 1", "Author 1", 200, true));
+  addBookToLibrary(new Book("Book 2", "Author 2", 300, false));
+}
 
 displayBooks();
