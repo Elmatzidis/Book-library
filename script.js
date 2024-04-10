@@ -22,29 +22,50 @@ function setLocalStorage() {
 function getStorage() {
   myLibrary = JSON.parse(localStorage.getItem("myLibrary")) || [];
 }
+
+// Old way of creating a book 
 // Creation of a book
-function Book(title, author, pages, isRead) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.isRead = isRead;
+// function Book(title, author, pages, isRead) {
+//   this.title = title;
+//   this.author = author;
+//   this.pages = pages;
+//   this.isRead = isRead;
+// }
+
+//Creatiob class Book which creating book objects
+class Book{
+    //Initial properties 
+    constructor(
+        title="Uknown",
+        author="Uknown",
+        pages=0,
+        isRead=False
+    ){
+        this.title=title;
+        this.author=author,
+        this.pages=pages,
+        this.isRead=isRead
+    }
 }
 
 // Adds the book to array myLibrary
 function addBookToLibrary(book) {
-  myLibrary.push(book);
+  myLibrary.push(book); //pushes the book to the myLibrary array
   setLocalStorage();
 }
 
-// Display the book according to the users input
+// Display the book according to the users input 
 function displayBooks() {
   bookContainer.innerHTML = "";
 
+//Loops through each book 
+//Creating a div bookCard and its index
   myLibrary.forEach((book, index) => {
     const bookCard = document.createElement("div");
-    bookCard.classList.add("book-card");
+    bookCard.classList.add("book-card");//Styles from the css file
 
     // Creation of the bookForm
+    // With HTML to display
     bookCard.innerHTML = `
     <div class="book-card-container">
     <button class="edit-btn" data-index="${index}"><img src="images/edit.svg" class="edit-btn" data-index="${index}"></button>
@@ -62,10 +83,14 @@ function displayBooks() {
       const bookRead = bookCard.querySelector(".book-read");
       const toggle_Read = bookCard.querySelector(".toggle-read");
 
+    // Changes backGroundColor and textContent depending on what
+    // the action is 
       if (bookRead.textContent === "Read") {
         toggle_Read.textContent = "Not-Read";
         toggle_Read.style.backgroundColor = "#E68C8C";
-      } else if (bookRead.textContent === "Not-Read") {
+      } 
+
+      else if (bookRead.textContent === "Not-Read") {
         toggle_Read.textContent = "Read";
         toggle_Read.style.backgroundColor = "#9fff9c";
       }
@@ -84,7 +109,7 @@ function toggleRead(index) {
   setLocalStorage();
 }
 
-// Removes a book Card
+// Removes a book Card when you press button remove
 function removeBook(index) {
   myLibrary.splice(index, 1);
   displayBooks();
@@ -100,6 +125,7 @@ function preventInvalidKeys(e) {
   }
 }
 
+//This function is used to edit the books properties
 function editBook(index) {
   const book = myLibrary[index];
 
@@ -108,7 +134,7 @@ function editBook(index) {
   const pages = document.querySelector("#pages");
   const isRead = document.querySelector("#read");
 
-  // Populate the form with book details
+// Populate the form with book details
   title.value = book.title;
   author.value = book.author;
   pages.value = book.pages;
@@ -116,12 +142,14 @@ function editBook(index) {
 
   indexOfBookToEdit = index; // Set the index of the book being edited
 
-  // Display the book form
+// Display the book form
   bookForm.style.display = "block";
   closeBookContainer.style.display = "block";
   overlayShow.classList.add("overlay-show");
 }
 
+// This function saves the edited parts of the book
+// and displays it with the new properties
 function saveEditBook(index) {
   const book = myLibrary[index];
 
@@ -130,10 +158,14 @@ function saveEditBook(index) {
   const newPages = document.querySelector("#pages").value;
   const newIsRead = document.querySelector("#read").checked;
 
+//  Validation for the books input
+//  It will shown a message depending on what missing from the inputs 
   if (newTitle === "" || newAuthor === "" || newPages === "") {
     window.alert("Please fill in the rest of the field");
     return;
-  } else if (newPages > 5000) {
+  } 
+//  If the pages is more than 5000 then it will display a message
+  else if (newPages > 5000) {
     window.alert("Pages can not exceed 5000");
     return;
   }
@@ -168,7 +200,7 @@ btn.addEventListener("click", () => {
 // Check if user wants to edit book
 // Validation if an input is empty
 submit.addEventListener("click", (e) => {
-  e.preventDefault();
+  e.preventDefault();//Default actions that belongs to e will not occur
   if (indexOfBookToEdit !== null) {
     saveEditBook(indexOfBookToEdit);
     indexOfBookToEdit = null;
@@ -178,11 +210,14 @@ submit.addEventListener("click", (e) => {
     const pages = document.querySelector("#pages").value;
     const isRead = document.querySelector("#read").checked;
 
-    // Validation
+//  Validation for the books input
+//  It will shown a message depending on what missing from the inputs 
     if (title === "" || author === "" || pages === "") {
       window.alert("Please fill in the rest of the field");
       return; // Exit the function if validation fails
-    } else if (pages > 5000) {
+    } 
+//  If the pages is more than 5000 then it will display a message
+    else if (pages > 5000) {
       window.alert("Pages cannot exceed 5000");
       return; // Exit the function if validation fails
     }
